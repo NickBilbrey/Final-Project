@@ -1,0 +1,9 @@
+<h1>Welcome, (userName)</h1>
+
+<label for="CountryList"></label>
+<select id="CountryList">
+    <ng-container *ngFor="let language of languageList">
+        <option value={{language}}></option>
+    </ng-container>
+</select>
+<button onclick="SwitchCountry()">Swap Country</button>

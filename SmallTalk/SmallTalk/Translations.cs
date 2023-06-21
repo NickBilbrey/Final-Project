@@ -26,7 +26,11 @@
             public string to { get; set; }
         }
 
-
+        public class TranslationRequest
+        {
+            public string TextToTranslate { get; set; }
+            public string TargetLanguageCode { get; set; }
+        }
 
     }
 }

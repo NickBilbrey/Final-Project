@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using static SmallTalk.Translations;
 
 namespace SmallTalk.Controllers
 {
@@ -22,10 +23,10 @@ namespace SmallTalk.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> TranslateText([FromBody] string textToTranslate)
+        public async Task<IActionResult> TranslateText([FromBody] TranslationRequest translationRequest)
         {
-            string route = "/translate?api-version=3.0&to=en&to=it";
-            object[] body = new object[] { new { Text = textToTranslate } };
+            string route = $"/translate?api-version=3.0&to={translationRequest.TargetLanguageCode}";
+            object[] body = new object[] { new { Text = translationRequest.TextToTranslate } };
             var requestBody = JsonConvert.SerializeObject(body);
 
             using (var client = new HttpClient())
@@ -43,6 +44,7 @@ namespace SmallTalk.Controllers
                 return Ok(result);
             }
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetLanguages()
