@@ -22,13 +22,18 @@ export class UserTranslateComponent implements OnInit {
 
     this.translateForm = this.formBuilder.group({
       selectedLanguage: [''],
-      textInput: ['']
+      textToTranslate: ['']
     });
+
+    console.log(this.languages)
   }
 
   onSubmit() {
+    console.log('Form submitted');
     const textToTranslate: string = this.translateForm.value.textToTranslate;
     const selectedLanguage: string = this.translateForm.value.selectedLanguage;
+    console.log(textToTranslate);
+    console.log(selectedLanguage);
   
     if (textToTranslate && selectedLanguage) {
       const translationRequest: TranslationRequest = {
@@ -37,15 +42,27 @@ export class UserTranslateComponent implements OnInit {
       };
   
       this.translateService.postTranslate(translationRequest).subscribe({
-        next: (translation: Translation) => {
-          this.translatedText = translation.Translation;
+        next: (response: Translation) => {
+          const translationResponse = JSON.parse(response.translation);
+          const translations = translationResponse[0].translations;
+          if (translations.length > 0) {
+            const translatedText = translations[0].text;
+            this.translatedText = translatedText;
+            console.log(translatedText);
+          }
         },
         error: (error: any) => {
-          console.log('Error Translating:', error)
+          console.log('Error Translating:', error);
         }
-    });
+      });
     }
   }
+  
+  
+  
+  
+  
+  
   
   
 }

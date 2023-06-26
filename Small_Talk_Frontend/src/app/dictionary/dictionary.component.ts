@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '../translate.service';
-import { language, TranslationRequest, Translation, Dictionaries, User, UserDictionary } from '../translation';}
+import { language, TranslationRequest, Translation, Dictionaries, User, UserDictionary } from '../translation';
 
 @Component({
   selector: 'app-dictionary',
