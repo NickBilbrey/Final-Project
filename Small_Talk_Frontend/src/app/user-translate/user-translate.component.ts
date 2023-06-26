@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '../translate.service';
-import { language, TranslationRequest, Translation, Dictionaries, User, UserDictionary } from '../translation';
+import { Language, TranslationRequest, Translation, Dictionaries, User, UserDictionary } from '../translation';
 import { FormGroup, FormBuilder } from '@angular/forms'
 
 @Component({
@@ -9,14 +9,46 @@ import { FormGroup, FormBuilder } from '@angular/forms'
   styleUrls: ['./user-translate.component.css']
 })
 export class UserTranslateComponent implements OnInit {
-  languages: language[] = [];
   translateForm!: FormGroup;
   translatedText: string = '';
+  
+  languages: Language[] = [];
+  language: Language = {
+    languageCode: '',
+    name: ''
+  }
+
+  user: User = {
+    userId:          0,
+    userName:       '',
+    password:       '',
+    dictionaries:   []
+  }  
+
+  userDictionaryList: Dictionaries[] = []; 
+  dictionaries: Dictionaries = {
+    dictionaryId:         0,
+    dictionaryName:      '',
+    language: this.language,
+    userId:               0,
+    user:         this.user,
+    userDictionaries:    []
+  }
+
+  userEntriesList: UserDictionary[] = [];
+  userDictionary: UserDictionary = {
+    entryId:        0,
+    userEntry:     '',
+    translation:   '',
+    dictionaryId:   0,
+    dictionary:    {}
+  }
+
 
   constructor(private translateService: TranslateService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.translateService.getPopularLanguages().subscribe(languages => {
+    this.translateService.getCurrentLanguages().subscribe(languages => {
       this.languages = languages;
     });
 

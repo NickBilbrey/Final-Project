@@ -1,9 +1,48 @@
-<h1>Welcome, (userName)</h1>
+<h1>Welcome</h1>
 
-<label for="CountryList"></label>
-<select id="CountryList">
-    <ng-container *ngFor="let language of languageList">
-        <option value={{language}}></option>
-    </ng-container>
-</select>
-<button onclick="SwitchCountry()">Swap Country</button>
+<div *ngIf="!showForm">
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ userName }}'s Dictionaries</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let dictionary of userDictionaryList">
+          <tr>
+            <td (click)="dictionarySelection(dictionary)">
+              {{ dictionary.dictionaryName }}
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="center">
+    <button (click)="showForm = true">Create New</button>
+  </div>
+</div>
+
+<div *ngIf="showForm">
+  <app-new-dictionary>(dictionaryCreated)="onDictionaryCreated($event)"></app-new-dictionary>
+</div>
+
+  <!-- <div class="center">
+    <form [formGroup]="dictionaryForm">
+      <label for="dictionaryName">Dictionary Name:</label>
+      <input type="text" id="dictionaryName" formControlName="dictionaryName" required>
+      <button type="button" (click)="switchLanguage(languageChoice)">Create</button>
+    </form>
+  
+  <div class="center">
+    <label for="languageList">Create New:</label>
+    <select id="languageList" [(ngModel)]="languageChoice" (change)="switchLanguage(languageChoice)">
+      <option value="">Select</option>
+      <option *ngFor="let language of languageList" [value]="language.name">{{ language.name }}</option>
+    </select>
+  </div> -->
+
+  
+  <!-- newDictionary() -->

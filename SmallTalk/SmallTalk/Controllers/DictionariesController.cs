@@ -33,20 +33,20 @@ namespace SmallTalk.Controllers
 
         // GET: api/Dictionaries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Dictionary>> GetDictionary(int id)
+        public async Task<ActionResult<IEnumerable<Dictionary>>> GetDictionaries(int id)
         {
-          if (_context.Dictionaries == null)
-          {
-              return NotFound();
-          }
-            var dictionary = await _context.Dictionaries.FindAsync(id);
+            if (_context.Dictionaries == null)
+            {
+                return NotFound();
+            }
+            var dictionaries = await _context.Dictionaries.Where(x => x.UserId == id).ToListAsync();
 
-            if (dictionary == null)
+            if (dictionaries == null)
             {
                 return NotFound();
             }
 
-            return dictionary;
+            return dictionaries;
         }
 
         // PUT: api/Dictionaries/5
@@ -87,7 +87,7 @@ namespace SmallTalk.Controllers
         {
           if (_context.Dictionaries == null)
           {
-              return Problem("Entity set 'SmalltalKContext.Dictionaries'  is null.");
+              return Problem("Entity set 'SmalltalKContext.Dictionaries' is null.");
           }
             _context.Dictionaries.Add(dictionary);
             await _context.SaveChangesAsync();
