@@ -33,13 +33,13 @@ namespace SmallTalk.Controllers
 
         // GET: api/UserDictionaries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDictionary>> GetUserDictionary(int id)
+        public async Task<ActionResult<IEnumerable<UserDictionary>>> GetUserDictionary(int id)
         {
           if (_context.UserDictionaries == null)
           {
               return NotFound();
           }
-            var userDictionary = await _context.UserDictionaries.FindAsync(id);
+            var userDictionary = await _context.UserDictionaries.Where(ud => ud.DictionaryId == id).ToListAsync();
 
             if (userDictionary == null)
             {
@@ -87,7 +87,7 @@ namespace SmallTalk.Controllers
         {
           if (_context.UserDictionaries == null)
           {
-              return Problem("Entity set 'SmalltalKContext.UserDictionaries'  is null.");
+              return Problem("Entity set 'SmalltalKContext.UserDictionaries' is null.");
           }
             _context.UserDictionaries.Add(userDictionary);
             await _context.SaveChangesAsync();

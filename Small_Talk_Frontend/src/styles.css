@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+    background-color: rgb(140, 222, 239);
+}
+  
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    text-align: center;
+  }

@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserTranslateComponent } from './user-translate/user-translate.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DictionaryComponent } from './dictionary/dictionary.component';
+import { NewDictionaryComponent } from './new-dictionary/new-dictionary.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -14,7 +16,9 @@ import { DictionaryComponent } from './dictionary/dictionary.component';
   declarations: [
     AppComponent,
     UserTranslateComponent,
-    DictionaryComponent
+    DictionaryComponent,
+    NewDictionaryComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

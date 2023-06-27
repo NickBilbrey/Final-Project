@@ -1,0 +1,20 @@
+
+<div class="center">
+  <div class="form-container">
+      <form [formGroup]="dictionaryForm" (ngSubmit)="onSubmit()">
+          <button type="submit" [disabled]="dictionaryForm.invalid">Create New Dictionary</button>
+          <div class="form-group">
+              <label for="dictionaryName">Dictionary Name:</label>
+              <input type="text" id="dictionaryName" formControlName="dictionaryName" required>
+          </div>
+          <div class="form-group">
+              <label for="language">Language:</label>
+              <select id="language" formControlName="language" required>
+              <option value="">Select Language</option>
+              <option *ngFor="let language of languageList" [value]="language.name">{{ language.name }}</option>
+              </select>
+          </div>
+      </form>
+    </div>
+</div>
+  

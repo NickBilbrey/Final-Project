@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '../translate.service';
-import { language, TranslationRequest, Translation, Dictionaries, User, UserDictionary } from '../translation';
+import { Language, TranslationRequest, Translation, Dictionaries, User, UserDictionary } from '../translation';
 import { FormGroup, FormBuilder } from '@angular/forms'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-translate',
@@ -9,14 +10,17 @@ import { FormGroup, FormBuilder } from '@angular/forms'
   styleUrls: ['./user-translate.component.css']
 })
 export class UserTranslateComponent implements OnInit {
-  languages: language[] = [];
   translateForm!: FormGroup;
   translatedText: string = '';
-
-  constructor(private translateService: TranslateService, private formBuilder: FormBuilder) { }
+  
+  languages: Language[] = [];
+  currentUserDictionary?: Dictionaries;
+  currentUserEntries: UserDictionary[] = []
+  
+  constructor(private translateService: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.translateService.getPopularLanguages().subscribe(languages => {
+    this.translateService.getCurrentLanguages().subscribe(languages => {
       this.languages = languages;
     });
 
@@ -25,7 +29,13 @@ export class UserTranslateComponent implements OnInit {
       textToTranslate: ['']
     });
 
-    console.log(this.languages)
+    const dictionaryId = this.route.snapshot.paramMap.get('dictionaryId');
+    if (dictionaryId) {
+      this.translateService.getUserDictionary(parseInt(dictionaryId, 10)).subscribe((result: UserDictionary[]) => {
+        this.currentUserEntries = result;
+        console.log('User Entries Received', this.currentUserEntries);
+      });
+    }
   }
 
   onSubmit() {
@@ -57,12 +67,31 @@ export class UserTranslateComponent implements OnInit {
       });
     }
   }
+
+  getCurrentDictionary(): void {
+    this.currentUserDictionary = this.translateService.userDictionary;
   
+    if (this.currentUserDictionary) {
+      this.dictionarySelection();
+    } else {
+      console.log('currentUserDictionary is undefined');
+    }
+  }
   
+
+
+  dictionarySelection(): void {
+    if (this.currentUserDictionary) {
+      this.translateService.getUserDictionary(this.currentUserDictionary.dictionaryId)
+        .subscribe((result: UserDictionary[]) => {
+          this.currentUserEntries = result;
+          console.log('User Entries Received', this.currentUserEntries);
+        });
+    } else {
+      // Handle the case when currentUserDictionary is undefined
+      console.log('currentUserDictionary is undefined');
+    }
+  }
   
-  
-  
-  
-  
-  
+
 }
