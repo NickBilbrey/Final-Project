@@ -8,7 +8,7 @@ import { Translation, Language, Dictionaries, User, UserDictionary, TranslationR
 })
 export class TranslateService {
 
-  private url: string = 'https://localhost:7181/'
+  private url: string = 'https://smalltalkapi.azure-api.net/smalltalkapi/'
 
   languages: Language[] = [
     { languageCode:        "ar", name: "Arabic" },
@@ -17,6 +17,9 @@ export class TranslateService {
     { languageCode:      "ja", name: "Japanese" },
     { languageCode: "tlh-Latn", name: "Klingon" }
     ];
+
+    currentUser?: User;
+    userDictionary?: Dictionaries;
     
   constructor(private http: HttpClient) { }
 
@@ -45,6 +48,10 @@ export class TranslateService {
       { languageCode: "tlh-Latn", name: "Klingon" }
     ];
     return of(currentLanguages);
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url + 'api/Users')
   }
 
 

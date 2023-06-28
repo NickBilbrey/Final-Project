@@ -22,6 +22,11 @@ namespace SmallTalk.Controllers
             secrets= new Secrets();
         }
 
+        public class TranslationResponse
+        {
+            public string Translation { get; set; }
+        }
+
         [HttpPost]
         public async Task<IActionResult> TranslateText([FromBody] TranslationRequest translationRequest)
         {
@@ -41,9 +46,15 @@ namespace SmallTalk.Controllers
                 HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
                 string result = await response.Content.ReadAsStringAsync();
 
-                return Ok(result);
+                var translationResponse = new TranslationResponse
+                {
+                    Translation = result
+                };
+
+                return Ok(translationResponse);
             }
         }
+
 
 
         [HttpGet]

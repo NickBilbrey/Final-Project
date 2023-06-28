@@ -27,9 +27,9 @@ export class NewDictionaryComponent {
   ];
 
   user: User = {
-    userId:          0,
-    userName:       '',
-    password:       '',
+    userId:          4,
+    userName:       'Nicholas',
+    password:       'GC2023',
     dictionaries:   []
   }  
 
@@ -37,7 +37,7 @@ export class NewDictionaryComponent {
     dictionaryId:         0,
     dictionaryName:      '',
     language: this.language,
-    userId:               0,
+    userId:               4,
     user:         this.user,
     userDictionaries:    []
   }
@@ -45,38 +45,32 @@ export class NewDictionaryComponent {
   constructor(private translateService: TranslateService, private formBuilder: FormBuilder, private router: Router) {
     this.dictionaryForm = this.formBuilder.group({
       dictionaryName: ['', Validators.required],
-      language: ['', Validators.required]
+      language: ['', Validators.required],
+      userId: this.user.userId
     });
   }
 
-  onSubmit(): void {
+  onSubmit() {
     if (this.dictionaryForm.valid) {
-      const dictionaryName = this.dictionaryForm.value.dictionaryName;
-      const language = this.dictionaryForm.value.language;
-      const newDictionary: Dictionaries = {
-        dictionaryId: 0,
-        dictionaryName: dictionaryName,
-        language: language,
-        userId: 0,
-        user: {
-          userId: 0,
-          userName: '',
-          password: '',
-          dictionaries: []
-        },
-        userDictionaries: []
-      };
-      //this.dictionaryCreated.emit(newDictionary);
+      const newDictionary: Dictionaries = this.dictionaryForm.value;
+  
       this.translateService.addDictionary(newDictionary)
-      .subscribe(result => {
-        this.dictionaries = result;
-        console.log(result);
-      });
-      //this.showForm = false;
-      console.log(newDictionary);
+        .subscribe(result => {
+          this.dictionaries = result;
+          console.log(newDictionary);
+          
+          newDictionary.dictionaryId = result.dictionaryId;
+
+          this.translateService.userDictionary = newDictionary;
+
+          this.dictionaryCreated.emit(newDictionary);
+  
+          // Navigates to the 'user-translate' route with the dictionaryId as a parameter
+          this.router.navigate(['/user-translate', newDictionary.dictionaryId]);
+        });
+  
       this.dictionaryForm.reset();
-      this.router.navigate(['/user-translate']);
-    
     }
   }
+  
 }

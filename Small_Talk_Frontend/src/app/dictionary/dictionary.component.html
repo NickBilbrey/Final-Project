@@ -28,21 +28,3 @@
 <div *ngIf="showForm">
   <app-new-dictionary>(dictionaryCreated)="onDictionaryCreated($event)"></app-new-dictionary>
 </div>
-
-  <!-- <div class="center">
-    <form [formGroup]="dictionaryForm">
-      <label for="dictionaryName">Dictionary Name:</label>
-      <input type="text" id="dictionaryName" formControlName="dictionaryName" required>
-      <button type="button" (click)="switchLanguage(languageChoice)">Create</button>
-    </form>
-  
-  <div class="center">
-    <label for="languageList">Create New:</label>
-    <select id="languageList" [(ngModel)]="languageChoice" (change)="switchLanguage(languageChoice)">
-      <option value="">Select</option>
-      <option *ngFor="let language of languageList" [value]="language.name">{{ language.name }}</option>
-    </select>
-  </div> -->
-
-  
-  <!-- newDictionary() -->

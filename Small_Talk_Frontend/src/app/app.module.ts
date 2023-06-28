@@ -8,6 +8,7 @@ import { UserTranslateComponent } from './user-translate/user-translate.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { NewDictionaryComponent } from './new-dictionary/new-dictionary.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -16,7 +17,8 @@ import { NewDictionaryComponent } from './new-dictionary/new-dictionary.componen
     AppComponent,
     UserTranslateComponent,
     DictionaryComponent,
-    NewDictionaryComponent
+    NewDictionaryComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

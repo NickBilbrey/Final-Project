@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '../translate.service';
 import { Language, TranslationRequest, Translation, Dictionaries, User, UserDictionary } from '../translation';
 import { Router } from '@angular/router';
-// import { FormBuilder, FormGroup } from '@angular/forms';
+
 
 @Component({
   selector: 'app-dictionary',
@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 export class DictionaryComponent implements OnInit {
   showForm = false;
 
-  // dictionaryForm: FormGroup;
 
   languageChoice: string = '';
   selectedLanguage: Language | undefined;
@@ -57,13 +56,7 @@ export class DictionaryComponent implements OnInit {
   
   
   
-  constructor (private translateService: TranslateService, private router: Router, /*private formBuilder: FormBuilder*/){
-    console.log(this.translateService);
-    // this.dictionaryForm = this.formBuilder.group({
-    //   dictionaryName:            [''],
-    //   language: this.selectedLanguage,
-    // });
-  }
+  constructor (private translateService: TranslateService, private router: Router){}
 
   userName: string = 'GWizner';
 
@@ -84,57 +77,17 @@ export class DictionaryComponent implements OnInit {
   
   }
 
-  dictionarySelection(dictionaries: Dictionaries): void {
-    this.translateService.getUserDictionary(dictionaries.dictionaryId)
-    .subscribe((result: UserDictionary[]) => {
-      this.userEntriesList = result;
-      console.log(result);
-    });
-    this.router.navigate(['/user-translate']);
+  dictionarySelection(dictionary: Dictionaries): void {
+    this.translateService.userDictionary = dictionary;
+    
+    this.router.navigate(['/user-translate', dictionary.dictionaryId]);
   }
+  
 
-  // switchLanguage(input: string): void {
-  //   this.selectedLanguage = this.languageList.find(result => result.name === input);
-  //   console.log(this.selectedLanguage);
-  //   this.newDictionary();
-  // }
   
-  // onDictionaryCreated(newDictionary: Dictionaries): void {
-  //   console.log('onDictionaryCreated function called');
-  //   this.translateService.addDictionary(newDictionary)
-  //     .subscribe(result => {
-  //       this.dictionaries = result;
-  //       console.log(result);
-  //     });
-  //     this.showForm = false;
-  //     this.router.navigate(['/user-translate']);
-  //   }
-  
-  
-  // newDictionary(){
-  //   const dictionaryName = this.dictionaryForm?.value.dictionaryName;
-  //   const userId = this.user.userId;
-  //   const userName = this.user.userName;
-
-  //   if (dictionaryName && this.selectedLanguage) {
-  //     const newDictionaries: Dictionaries = {
-  //       dictionaryId: 0,
-  //       dictionaryName: dictionaryName,
-  //       language: this.selectedLanguage,
-  //       userId: userId,
-  //       user: {
-  //         userId: userId,
-  //         userName: userName,
-  //         password: '',
-  //         dictionaries: []
-  //       },
-  //       userDictionaries: []
-  //     };
-  //     this.translateService.addDictionary(newDictionaries)
-  //       .subscribe(result => {
-  //         this.dictionaries = result;
-  //         console.log(result);
-  //     });
-  //   }
-  // }
+ 
+  onDictionaryCreated(newDictionary: Dictionaries): void {
+    console.log('onDictionaryCreated function called');
+    this.userDictionaryList.push(newDictionary);
+  }
 }

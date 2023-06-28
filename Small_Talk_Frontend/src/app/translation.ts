@@ -1,5 +1,5 @@
 export interface Translation {
-    Translation: string;
+    translation: string;
 }
 
 export interface Language {

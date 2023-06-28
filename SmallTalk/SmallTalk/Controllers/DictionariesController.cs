@@ -83,7 +83,7 @@ namespace SmallTalk.Controllers
         // POST: api/Dictionaries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Dictionary>> PostDictionary(Dictionary dictionary)
+        public async Task<ActionResult<Dictionary>> PostDictionary([FromBody]Dictionary dictionary)
         {
           if (_context.Dictionaries == null)
           {
@@ -92,7 +92,7 @@ namespace SmallTalk.Controllers
             _context.Dictionaries.Add(dictionary);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDictionary", new { id = dictionary.DictionaryId }, dictionary);
+            return (dictionary);
         }
 
         // DELETE: api/Dictionaries/5
