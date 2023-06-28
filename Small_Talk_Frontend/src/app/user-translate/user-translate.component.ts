@@ -36,6 +36,9 @@ export class UserTranslateComponent implements OnInit {
         console.log('User Entries Received', this.currentUserEntries);
       });
     }
+
+    console.log(this.translateService.userDictionary)
+    this.currentUserDictionary = this.translateService.userDictionary;
   }
 
   onSubmit() {

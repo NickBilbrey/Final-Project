@@ -78,6 +78,8 @@ export class DictionaryComponent implements OnInit {
   }
 
   dictionarySelection(dictionary: Dictionaries): void {
+    this.translateService.userDictionary = dictionary;
+    
     this.router.navigate(['/user-translate', dictionary.dictionaryId]);
   }
   

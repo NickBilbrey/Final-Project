@@ -61,6 +61,8 @@ export class NewDictionaryComponent {
           
           newDictionary.dictionaryId = result.dictionaryId;
 
+          this.translateService.userDictionary = newDictionary;
+
           this.dictionaryCreated.emit(newDictionary);
   
           // Navigates to the 'user-translate' route with the dictionaryId as a parameter
