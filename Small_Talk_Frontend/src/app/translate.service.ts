@@ -55,12 +55,12 @@ export class TranslateService {
   }
 
   checkUser(username: string, password: string): Observable<number> {
-    const body = {
+    const login = {
       username: username,
       password: password
     };
 
-    return this.http.post<number>(`${this.url}api/Users/CheckUser`, body);
+    return this.http.post<number>(`${this.url}api/Users/CheckUser`, login);
   }
 
 }

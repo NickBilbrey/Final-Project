@@ -121,9 +121,9 @@ namespace SmallTalk.Controllers
         }
 
         [HttpPost("CheckUser")]
-        public async Task<ActionResult<int>> CheckUser(string username, string password)
+        public async Task<ActionResult<int>> CheckUser([FromBody] LoginModel login)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username && u.Password == password);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == login.Username && u.Password == login.Password);
 
             if (user != null)
             {
@@ -135,8 +135,8 @@ namespace SmallTalk.Controllers
                 // User doesn't exist, create a new user
                 var newUser = new User
                 {
-                    UserName = username,
-                    Password = password
+                    UserName = login.Username,
+                    Password = login.Password
                 };
 
                 _context.Users.Add(newUser);
