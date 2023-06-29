@@ -62,6 +62,8 @@ export class DictionaryComponent implements OnInit {
 
    async ngOnInit(): Promise<void> {
     
+    console.log(this.translateService.currentUser?.userName);
+
     this.translateService.getCurrentLanguages()
     .subscribe(result => {
       this.languageList = result;

@@ -21,6 +21,7 @@ export class LoginComponent {
             password: password
           };
           console.log('User Logged in!');
+          this.router.navigate(['/dictionary']);
         }
       },
       error: (error: any) => {
