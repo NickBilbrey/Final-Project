@@ -20,7 +20,7 @@ export interface User {
     userId:         number;
     userName:       string;
     password:       string;
-    dictionaries: string[];
+    dictionaries?: string[];
 }
 
 export interface UserDictionary {

@@ -8,7 +8,7 @@ import { Translation, Language, Dictionaries, User, UserDictionary, TranslationR
 })
 export class TranslateService {
 
-  private url: string = 'https://smalltalkapi.azure-api.net/smalltalkapi/'
+  private url: string = 'https://smalltalk20230626202511.azurewebsites.net/'
 
   languages: Language[] = [
     { languageCode:        "ar", name: "Arabic" },
@@ -54,7 +54,13 @@ export class TranslateService {
     return this.http.get<User[]>(this.url + 'api/Users')
   }
 
+  checkUser(username: string, password: string): Observable<number> {
+    const body = {
+      username: username,
+      password: password
+    };
 
+    return this.http.post<number>(`${this.url}api/Users/CheckUser`, body);
+  }
 
-  
 }

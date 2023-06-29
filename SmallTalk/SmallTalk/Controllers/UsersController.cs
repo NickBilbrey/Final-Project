@@ -119,5 +119,33 @@ namespace SmallTalk.Controllers
         {
             return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
         }
+
+        [HttpPost("CheckUser")]
+        public async Task<ActionResult<int>> CheckUser(string username, string password)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username && u.Password == password);
+
+            if (user != null)
+            {
+                // User exists, return the user ID
+                return user.UserId;
+            }
+            else
+            {
+                // User doesn't exist, create a new user
+                var newUser = new User
+                {
+                    UserName = username,
+                    Password = password
+                };
+
+                _context.Users.Add(newUser);
+                await _context.SaveChangesAsync();
+
+                // Return the newly created user ID
+                return newUser.UserId;
+            }
+        }
+
     }
 }
