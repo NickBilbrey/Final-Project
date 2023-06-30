@@ -1,19 +1,39 @@
-<form [formGroup]="translateForm" (ngSubmit)="onSubmit()">
-  <label for="selectedLanguage">Select a language:</label>
-  <select formControlName="selectedLanguage" id="selectedLanguage">
-    <option value="">-- Select a language --</option>
-    <option *ngFor="let language of languages" [value]="language.languageCode">
-      {{ language.name }}
-    </option>
-  </select>
-  
-  <label for="textToTranslate">Enter text to translate:</label>
-  <input type="text" formControlName="textToTranslate" id="textToTranslate">
 
-  <div *ngIf="translatedText">
-    Translation: {{ translatedText }}
+<div class="background-container">
+  <h1>HELLO{{ this.currentUserDictionary?.dictionaryName }}</h1>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Entries</th>
+          <th>Definitions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let entry of currentUserEntries">
+          <tr>
+            <td>{{ entry.userEntry }}</td>
+            <td>{{ entry.translation }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
   </div>
   
+  <div class ="center">
+    <form [formGroup]="translateForm" (ngSubmit)="onSubmit()">
+      <label for="textToTranslate">Enter text to translate:</label>
+      <input type="text" formControlName="textToTranslate" id="textToTranslate">
+    
+      <div *ngIf="translatedText">
+        Translation: {{ translatedText }}
+      </div>
+      
+      
+      <button type="submit">Translate</button>
+    </form>
+    
+  </div>
   
-  <button type="submit">Translate</button>
-</form>
+</div>
