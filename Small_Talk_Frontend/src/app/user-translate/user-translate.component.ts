@@ -16,6 +16,7 @@ export class UserTranslateComponent implements OnInit {
   languages: Language[] = [];
   currentUserDictionary?: Dictionaries;
   currentUserEntries: UserDictionary[] = []
+  userLanguage?: Language;
   
   constructor(private translateService: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
 
@@ -37,38 +38,45 @@ export class UserTranslateComponent implements OnInit {
       });
     }
 
-    console.log(this.translateService.userDictionary)
+    console.log(this.translateService.userDictionary);
     this.currentUserDictionary = this.translateService.userDictionary;
+
+    console.log(this.currentUserDictionary?.language)
+    this.userLanguage = this.languages.find(language => language.name === this.currentUserDictionary?.language.toString());
+    console.log(this.userLanguage);
   }
 
   onSubmit() {
     console.log('Form submitted');
     const textToTranslate: string = this.translateForm.value.textToTranslate;
-    const selectedLanguage: string = this.translateForm.value.selectedLanguage;
-    console.log(textToTranslate);
-    console.log(selectedLanguage);
-  
-    if (textToTranslate && selectedLanguage) {
-      const translationRequest: TranslationRequest = {
-        textToTranslate: textToTranslate,
-        targetLanguageCode: selectedLanguage
-      };
-  
-      this.translateService.postTranslate(translationRequest).subscribe({
-        next: (response: Translation) => {
-          const translationResponse = JSON.parse(response.translation);
-          const translations = translationResponse[0].translations;
-          if (translations.length > 0) {
-            const translatedText = translations[0].text;
-            this.translatedText = translatedText;
-            console.log(translatedText);
+    if(this.userLanguage){
+      const selectedLanguage: string = this.userLanguage?.languageCode
+
+      console.log(textToTranslate);
+      console.log(selectedLanguage);
+    
+      if (textToTranslate && selectedLanguage) {
+        const translationRequest: TranslationRequest = {
+          textToTranslate: textToTranslate,
+          targetLanguageCode: selectedLanguage
+        };
+    
+        this.translateService.postTranslate(translationRequest).subscribe({
+          next: (response: Translation) => {
+            const translationResponse = JSON.parse(response.translation);
+            const translations = translationResponse[0].translations;
+            if (translations.length > 0) {
+              const translatedText = translations[0].text;
+              this.translatedText = translatedText;
+              console.log(translatedText);
+            }
+          },
+          error: (error: any) => {
+            console.log('Error Translating:', error);
           }
-        },
-        error: (error: any) => {
-          console.log('Error Translating:', error);
-        }
-      });
-    }
+        });
+      }
+    }  
   }
 
   getCurrentDictionary(): void {
