@@ -1,14 +1,25 @@
-<h2 class="login-h2">Login</h2>
-<div>
-    <form (ngSubmit)="loginUser(userName.value, password.value)" class="login-form">
-      <div>
-        <label class="login-label" for="userName">User Name:</label>
-        <input type="text" id="userName" name="userName" required #userName>
-      </div>
-      <div>
-        <label class="login-label" for="password">Password:</label>
-        <input type="password" id="password" name="password" required #password>
-      </div>
-      <button type="submit" class="login-button">Login</button>
-    </form>
+
+<div class="background-container">
+    
+
+  <div class="center2">
+    <div class="smalltalk-container">
+      <p class="smalltalk">SmalltalK</p>
+    </div>
+  
+    <div class="form-container">
+      <form (ngSubmit)="loginUser(userName.value, email.value)" class="login-form">
+        <div>
+          <label class="login-label" for="userName">User Name:</label>
+          <input type="text" id="userName" name="userName" required #userName>
+        </div>
+        <div>
+          <label class="login-label" for="password">Password:</label>
+          <input type="password" id="password" name="password" required #email>
+        </div>
+        <button type="submit" class="login-button">Login</button>
+      </form>
+    </div>
   </div>
+  
+</div>

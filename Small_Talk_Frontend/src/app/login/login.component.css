@@ -1,0 +1,42 @@
+
+.center2 {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  .smalltalk-container {
+    margin-bottom: 20px;
+  }
+  
+   .smalltalk {
+    font-size: 64px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+    font-weight: 900;
+    margin-left: 0.5em;
+  }
+   
+  .form-container {
+    margin-top: 20px;
+  }
+  
+  .login-label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .login-button {
+    margin-top: 10px;
+  }
+  
+  .login-form {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #6378a8;
+    border-radius: 5px;
+    background-color: #6ccfe8;
+  }

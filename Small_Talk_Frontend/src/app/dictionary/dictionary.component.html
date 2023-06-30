@@ -1,30 +1,33 @@
-<h1>Welcome</h1>
 
-<div *ngIf="!showForm">
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>{{ userName }}'s Dictionaries</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngFor="let dictionary of userDictionaryList">
+<div class="background-container">
+  <h1>Welcome</h1>
+
+  <div *ngIf="!showForm">
+    <div class="table-container">
+      <table>
+        <thead>
           <tr>
-            <td (click)="dictionarySelection(dictionary)">
-              {{ dictionary.dictionaryName }}
-            </td>
+            <th>{{ user.userName }}'s Dictionaries</th>
           </tr>
-        </ng-container>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let dictionary of userDictionaryList">
+            <tr>
+              <td (click)="dictionarySelection(dictionary)">
+                {{ dictionary.dictionaryName }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="center">
+      <button (click)="showForm = true">Create New</button>
+    </div>
   </div>
-
-  <div class="center">
-    <button (click)="showForm = true">Create New</button>
+  
+  <div *ngIf="showForm">
+    <app-new-dictionary>(dictionaryCreated)="onDictionaryCreated($event)"></app-new-dictionary>
   </div>
-</div>
-
-<div *ngIf="showForm">
-  <app-new-dictionary>(dictionaryCreated)="onDictionaryCreated($event)"></app-new-dictionary>
 </div>

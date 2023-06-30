@@ -4,8 +4,16 @@ html {
   
 .center {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     height: 100vh;
     text-align: center;
+  }
+
+  .background-container {
+    background-image: url('images/AroundTheWorld.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
