@@ -7,11 +7,11 @@
       <table>
         <thead>
           <tr>
-            <th>{{ user.userName }}'s Dictionaries</th>
+            <th>{{ this.currentUserName }}'s Dictionaries</th>
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let dictionary of userDictionaryList">
+          <ng-container *ngFor="let dictionary of userDictionaryList | sortDictionaries">
             <tr>
               <td (click)="dictionarySelection(dictionary)">
                 {{ dictionary.dictionaryName }}

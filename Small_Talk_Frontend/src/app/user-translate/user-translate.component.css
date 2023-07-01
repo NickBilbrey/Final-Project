@@ -1,43 +1,102 @@
+
 h1 {
-    text-align: center;
-  }
+  text-align: center;
+}
 
 table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  th, td {
-    padding: 10px 5px;
-    text-align: center;
-    line-height: 1;
-  }
-  
-  thead {
-    font-size: 24px;
-    text-align: center;
-    background-color: #508fbf;
-    font-weight: bold;
-  }
-  
-  tbody tr:nth-child(odd) {
-    background-color: #6ecceb;
-  }
-  
-    
-  th, td {
-    border: 2px solid #000000;
-    white-space: nowrap;
-  }
-  
-  .table-container {
-    width: 50%;
-    margin: 20px auto;
-    overflow: visible;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .table-container table {
-    padding-bottom: 50px;
-  }
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 10px 5px;
+  text-align: center;
+  line-height: 1;
+}
+
+thead {
+  font-size: 24px;
+  text-align: center;
+  background-color: #508fbf;
+  font-weight: bold;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #6ecceb;
+}
+
+th, td {
+  border: 2px solid #000000;
+  white-space: nowrap;
+}
+
+.dictionary-header {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.table-container {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 0px;
+  height: 440px;
+  overflow-x: auto;
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.table-container table {
+  width: max-content;
+  min-width: 100%;
+  table-layout: auto;
+  white-space: nowrap;
+  border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+  padding: 10px;
+  text-align: center;
+  border: 2px solid #000000;
+}
+
+.table-container thead {
+  font-size: 24px;
+  text-align: center;
+  background-color: #508fbf;
+  font-weight: bold;
+}
+
+.table-container tbody tr:nth-child(odd) {
+  background-color: #6ecceb;
+}
+
+.translate-form {
+  display:flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 0px;
+  padding: 20px;
+  border: 1px solid #6378a8;
+  border-radius: 5px;
+  background-color: #6ccfe8;
+}
+
+.translate-form label {
+  color: lightgray;
+}
+
+.translate-form input[type="text"] {
+  height: 150px;
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.translate-form input[type="text"]::placeholder {
+  color: lightgray;
+}

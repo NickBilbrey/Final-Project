@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./user-translate.component.css']
 })
 export class UserTranslateComponent implements OnInit {
-  translateForm!: FormGroup;
+  translateForm: FormGroup;
   translatedText: string = '';
   
   languages: Language[] = [];
@@ -18,9 +18,15 @@ export class UserTranslateComponent implements OnInit {
   currentUserEntries: UserDictionary[] = []
   userLanguage?: Language;
   
-  constructor(private translateService: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
+  constructor(private translateService: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute) { 
+    this.translateForm = this.formBuilder.group({
+      selectedLanguage: [''],
+      textToTranslate: ['']
+    });
+  }
 
-  ngOnInit() {
+  
+   ngOnInit() {
     this.translateService.getCurrentLanguages().subscribe(languages => {
       this.languages = languages;
     });
@@ -104,5 +110,7 @@ export class UserTranslateComponent implements OnInit {
     }
   }
   
-
+  isInputActive() {
+    return this.translateForm.get('textToTranslate')?.value;
+  }
 }

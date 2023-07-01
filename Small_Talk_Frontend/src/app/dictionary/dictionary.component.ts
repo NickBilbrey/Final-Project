@@ -28,7 +28,7 @@ export class DictionaryComponent implements OnInit {
     ];
   
 
-  user: User = {
+  currentUser: User = {
     userId:          0,
     userName:       '',
     password:       '',
@@ -41,7 +41,7 @@ export class DictionaryComponent implements OnInit {
     dictionaryName:      '',
     language: this.language,
     userId:               0,
-    user:         this.user,
+    user:   this.currentUser,
     userDictionaries:    []
   }
 
@@ -54,15 +54,18 @@ export class DictionaryComponent implements OnInit {
     dictionary:    {}
   }
   
-  
+  currentUserName?: string;
+  currentUserId?: number;
   
   constructor (private translateService: TranslateService, private router: Router){}
 
-  userName: string = 'GWizner';
-
+  
    async ngOnInit(): Promise<void> {
+
+    this.currentUserName = this.translateService.currentUser?.userName;
+    const currentUserId = this.translateService.currentUser?.userId;
     
-    console.log(this.translateService.currentUser?.userName);
+    console.log(this.currentUserName, currentUserId);
 
     this.translateService.getCurrentLanguages()
     .subscribe(result => {
@@ -70,12 +73,13 @@ export class DictionaryComponent implements OnInit {
       console.log(result);
     });
 
-    
-    this.translateService.getDictionariesByUserId(1)               //(this.userDictionaries.userId)
-    .subscribe((result: Dictionaries[]) => {
-      this.userDictionaryList = result;
-      console.log(result);
-    });
+    if (currentUserId){
+      this.translateService.getDictionariesByUserId(currentUserId)              
+      .subscribe((result: Dictionaries[]) => {
+        this.userDictionaryList = result;
+        console.log(result);
+      });
+    }
   
   }
 

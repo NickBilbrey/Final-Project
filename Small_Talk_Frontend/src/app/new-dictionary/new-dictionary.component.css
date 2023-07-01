@@ -1,0 +1,17 @@
+
+.dictionary-form {
+    max-width: 200px;
+    width: 50%;
+    padding: 20px;
+    border: 1px solid #6378a8;
+    border-radius: 5px;
+    background-color: #6ccfe8;
+  }
+
+   
+  .dictionary-form input[type="text"]::placeholder {
+    color: lightgray;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  

@@ -27,9 +27,9 @@ export class NewDictionaryComponent {
   ];
 
   user: User = {
-    userId:          4,
-    userName:       'Nicholas',
-    password:       'GC2023',
+    userId:          0,
+    userName:       '',
+    password:       '',
     dictionaries:   []
   }  
 
@@ -37,23 +37,28 @@ export class NewDictionaryComponent {
     dictionaryId:         0,
     dictionaryName:      '',
     language: this.language,
-    userId:               4,
+    userId:               0,
     user:         this.user,
     userDictionaries:    []
   }
 
+  currentUserId?: number;
+
   constructor(private translateService: TranslateService, private formBuilder: FormBuilder, private router: Router) {
+    this.currentUserId = this.translateService.currentUser?.userId;
     this.dictionaryForm = this.formBuilder.group({
       dictionaryName: ['', Validators.required],
       language: ['', Validators.required],
-      userId: this.user.userId
+      userId: this.currentUserId
     });
   }
+
+
 
   onSubmit() {
     if (this.dictionaryForm.valid) {
       const newDictionary: Dictionaries = this.dictionaryForm.value;
-  
+      
       this.translateService.addDictionary(newDictionary)
         .subscribe(result => {
           this.dictionaries = result;

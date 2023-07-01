@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { NewDictionaryComponent } from './new-dictionary/new-dictionary.component';
 import { LoginComponent } from './login/login.component';
+import { SortEntriesPipe } from './sort-entries.pipe';
+import { SortDictionariesPipe } from './sort-dictionaries.pipe';
 
 
 
@@ -18,7 +20,9 @@ import { LoginComponent } from './login/login.component';
     UserTranslateComponent,
     DictionaryComponent,
     NewDictionaryComponent,
-    LoginComponent
+    LoginComponent,
+    SortEntriesPipe,
+    SortDictionariesPipe,
   ],
   imports: [
     BrowserModule,
