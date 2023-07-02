@@ -1,0 +1,14 @@
+
+<div class="center">
+    <div class="user-form">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <button type="submit" [disabled]="userForm.invalid">Create New User</button>
+            <div class="form-group">
+                <input type="text" id="userName" formControlName="userName" required placeholder="User Name">
+            </div>
+            <div class="form-group">
+                <input type="text" id="password" formControlName="password" required placeholder="Password">
+            </div>
+        </form>
+      </div>
+  </div>

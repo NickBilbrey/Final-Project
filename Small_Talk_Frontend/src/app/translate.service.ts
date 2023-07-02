@@ -20,6 +20,8 @@ export class TranslateService {
 
     currentUser?: User;
     userDictionary?: Dictionaries;
+    entry?: UserDictionary;
+    
     
   constructor(private http: HttpClient) { }
 
@@ -39,6 +41,14 @@ export class TranslateService {
     return this.http.get<UserDictionary[]>(this.url + `api/UserDictionaries/${dictionaryId}`)
   }
 
+  addEntry(newEntry: UserDictionary): Observable<UserDictionary>{
+    return this.http.post<UserDictionary>(this.url + `api/UserDictionaries`, newEntry);
+  }
+
+  editEntry(entryId: number): Observable<UserDictionary>{
+    return this.http.put<UserDictionary>(this.url + `api/UserDictionaries/${entryId}`, this.entry);
+  }
+
   getCurrentLanguages(): Observable<Language[]> {
     const currentLanguages: Language[] = [
       { languageCode:        "ar", name: "Arabic" },
@@ -52,6 +62,10 @@ export class TranslateService {
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url + 'api/Users')
+  }
+
+  addUser(newUser: User): Observable<User>{
+    return this.http.post<User>(this.url + `api/Users`, newUser);
   }
 
   checkUser(username: string, password: string): Observable<number> {

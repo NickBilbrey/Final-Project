@@ -4,12 +4,14 @@ import { DictionaryComponent } from './dictionary/dictionary.component';
 import { UserTranslateComponent } from './user-translate/user-translate.component';
 import { NewDictionaryComponent } from './new-dictionary/new-dictionary.component';
 import { LoginComponent } from './login/login.component';
+import { NewUserComponent } from './new-user/new-user.component';
 
 
 const routes: Routes = [{ path: '', component: LoginComponent},
+{ path: 'new-user', component: NewUserComponent },
+{ path: 'dictionary', component: DictionaryComponent},
 { path: 'new-dictionary', component: NewDictionaryComponent},
-{ path: 'user-translate/:dictionaryId', component: UserTranslateComponent },
-{ path: 'dictionary', component: DictionaryComponent}
+{ path: 'user-translate/:dictionaryId', component: UserTranslateComponent }
 ];
 
 @NgModule({
