@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '../translate.service';
-import { Language, TranslationRequest, Translation, Dictionaries, User, UserDictionary } from '../translation';
+import { Language, TranslationRequest, Translation, Dictionaries, User, UserDictionary, TransliterationRequest, TransliterationResult } from '../translation';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 
@@ -61,36 +61,72 @@ export class UserTranslateComponent implements OnInit {
 
   onSubmit() {
     console.log('Form submitted');
-    const textToTranslate: string = this.translateForm.value.textToTranslate;
-    if(this.userLanguage){
-      const selectedLanguage: string = this.userLanguage?.languageCode
+    if(this.userLanguage?.fromScript){
+      this.transliterateText();
+    }
+    else{
+      const textToTranslate: string = this.translateForm.value.textToTranslate;
+      if(this.userLanguage){
+        const selectedLanguage: string = this.userLanguage.languageCode
 
-      console.log(textToTranslate);
-      console.log(selectedLanguage);
-    
-      if (textToTranslate && selectedLanguage) {
-        const translationRequest: TranslationRequest = {
-          textToTranslate: textToTranslate,
-          targetLanguageCode: selectedLanguage
-        };
-    
-        this.translateService.postTranslate(translationRequest).subscribe({
-          next: (response: Translation) => {
-            const translationResponse = JSON.parse(response.translation);
-            const translations = translationResponse[0].translations;
-            if (translations.length > 0) {
-              const translatedText = translations[0].text;
-              this.translatedText = translatedText;
-              console.log(translatedText);
+        console.log(textToTranslate);
+        console.log(selectedLanguage);
+      
+        if (textToTranslate && selectedLanguage) {
+          const translationRequest: TranslationRequest = {
+            textToTranslate: textToTranslate,
+            targetLanguageCode: selectedLanguage
+          };
+      
+          this.translateService.postTranslate(translationRequest).subscribe({
+            next: (response: Translation) => {
+              const translationResponse = JSON.parse(response.translation);
+              const translations = translationResponse[0].translations;
+              if (translations.length > 0) {
+                const translatedText = translations[0].text;
+                this.translatedText = translatedText;
+                console.log(translatedText);
+              }
+            },
+            error: (error: any) => {
+              console.log('Error Translating:', error);
             }
-          },
-          error: (error: any) => {
-            console.log('Error Translating:', error);
-          }
-        });
+          });
+        }
       }
     }  
   }
+
+  transliterateText() {
+    const textToTransliterate: string = this.translateForm.value.textToTranslate;
+    if (this.userLanguage) {
+      const languageCode: string = this.userLanguage.languageCode;
+      if(this.userLanguage.fromScript){
+        const fromScript: string = this.userLanguage.fromScript;
+    
+        const transliterationRequest: TransliterationRequest = {
+          text: textToTransliterate,
+          language: languageCode,
+          fromScript: fromScript,
+          toScript: 'latn'
+        };
+    
+        this.translateService.transliterateText(transliterationRequest).subscribe({
+          next: (response: TransliterationResult[]) => {
+            if (response.length > 0) {
+              const transliteratedText = response[0].text;
+              this.translatedText = transliteratedText;
+              console.log(transliteratedText);
+            }
+          },
+          error: (error: any) => {
+            console.log('Error Transliterating:', error);
+          }
+        });
+      }
+    }
+  }
+  
 
   newEntry() {
     if (this.entryForm.valid) {
