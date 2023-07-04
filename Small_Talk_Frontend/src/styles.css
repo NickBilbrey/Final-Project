@@ -2,14 +2,14 @@ html {
     background-color: rgb(140, 222, 239);
 }
   
-  .center {
-      display: flex;
-      flex-direction: column;
-      justify-content: top;
-      align-items: center;
-      height: 35vh;
-      text-align: center;
-    }
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
 
   .background-container {
     background-image: url('images/AroundTheWorld.jpg');

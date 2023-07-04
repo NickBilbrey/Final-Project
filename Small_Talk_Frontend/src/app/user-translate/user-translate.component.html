@@ -24,7 +24,7 @@
       </table>
     </div>
 
-    <div class="center">
+    <div class="center2">
       <form [formGroup]="translateForm" (ngSubmit)="onSubmit()" class="translate-form">
         <input type="text" formControlName="textToTranslate" id="textToTranslate" placeholder="Enter text to translate">
 
@@ -32,7 +32,7 @@
           Translation: {{ translatedText }}
         </div>
 
-        <button type="submit">Translate</button>
+        <button type="submit" [disabled]="translateForm.invalid">Translate</button>
       </form>
     </div>
     <div class="center">

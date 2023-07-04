@@ -1,37 +1,25 @@
 
 <div class="background-container">
-  <div *ngIf="!showForm" class="login-container">
-    
-
-    <div class="center2">
-      <div class="smalltalk-container">
-        <p class="smalltalk">SmalltalK</p>
-      </div>
-    
-      <div class="form-container">
-        <form (ngSubmit)="loginUser(userName.value, email.value)" class="login-form">
-          <div>
-            <label class="login-label" for="userName">User Name:</label>
-            <input type="text" id="userName" name="userName" required #userName>
-          </div>
-          <div>
-            <label class="login-label" for="password">Password:</label>
-            <input type="password" id="password" name="password" required #email>
-          </div>
-          <button type="submit" class="login-button">Login</button>
-        </form>
-      </div>
+  <div class="center">
+    <div class="smalltalk-container">
+      <p class="smalltalk">SmalltalK</p>
     </div>
-    
-  </div>
-  <div class="new-user">
-    <button (click)="showForm = true">New User</button>
+  
+    <div class="form-container">
+      <form (ngSubmit)="loginUser(userName.value, email.value)" class="login-form">
+        <div>
+          <label class="login-label" for="userName">User Name:</label>
+          <input type="text" id="userName" name="userName" required #userName>
+        </div>
+        <div>
+          <label class="login-label" for="password">Password:</label>
+          <input type="password" id="password" name="password" required #email>
+        </div>
+        <button type="submit" class="login-button">Login</button>
+      </form>
+    </div>
   </div>
   
-    
-  <div *ngIf="showForm">
-    <app-new-user>(userCreated)="onUserCreated($event)"></app-new-user>
-  </div>
 </div>
   
 
