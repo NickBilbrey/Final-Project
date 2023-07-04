@@ -27,7 +27,7 @@ namespace SmallTalk.Controllers
             public string Translation { get; set; }
         }
 
-        [HttpPost]
+        [HttpPost("Translate")]
         public async Task<IActionResult> TranslateText([FromBody] TranslationRequest translationRequest)
         {
             string route = $"/translate?api-version=3.0&to={translationRequest.TargetLanguageCode}";
@@ -52,6 +52,38 @@ namespace SmallTalk.Controllers
                 };
 
                 return Ok(translationResponse);
+            }
+        }
+
+
+        [HttpPost("Transliterate")]
+        public async Task<IActionResult> TransliterateText([FromBody] TransliterationRequest transliterationRequest)
+        {
+            string route = $"/transliterate?api-version=3.0&language={transliterationRequest.Language}&fromScript={transliterationRequest.FromScript}&toScript={transliterationRequest.ToScript}";
+            string url = $"{endpoint}{route}";
+
+            var requestBody = JsonConvert.SerializeObject(new List<TransliterationRequest> { transliterationRequest });
+
+            using (var client = new HttpClient())
+            using (var request = new HttpRequestMessage(HttpMethod.Post, url))
+            {
+                request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
+                request.Headers.Add("Ocp-Apim-Subscription-Key", secrets.secretApiKey);
+                request.Headers.Add("Ocp-Apim-Subscription-Region", location);
+
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string result = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var transliterationResponse = JsonConvert.DeserializeObject<List<TransliterationResult>>(result);
+                    return Ok(transliterationResponse);
+                }
+                else
+                {
+                    // Handle the error response
+                    return StatusCode((int)response.StatusCode, result);
+                }
             }
         }
 

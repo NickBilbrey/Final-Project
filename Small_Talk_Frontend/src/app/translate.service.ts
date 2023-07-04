@@ -30,7 +30,7 @@ export class TranslateService {
   }
 
   postTranslate(userTranslation: TranslationRequest): Observable<Translation> {
-    return this.http.post<Translation>(this.url + `api/Translation`, userTranslation);
+    return this.http.post<Translation>(this.url + `api/Translation/Translate`, userTranslation);
   }
 
   addDictionary(dictionary: Dictionaries): Observable<Dictionaries>{
