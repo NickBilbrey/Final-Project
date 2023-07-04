@@ -11,6 +11,8 @@
           <tr>
             <th>Entries</th>
             <th>Definitions</th>
+            <th>Edit</th>
+            <th>Remove</th>
           </tr>
         </thead>
         <tbody>
@@ -18,6 +20,12 @@
             <tr>
               <td>{{ entry.userEntry }}</td>
               <td>{{ entry.translation }}</td>
+              <td>
+                <button (click)="removeEntry(entry.entryId)">Delete</button>
+              </td> 
+              <td>
+                <button (click)="routeToEditEntry(entry.entryId)">Edit</button>
+              </td>
             </tr>
           </ng-container>
         </tbody>

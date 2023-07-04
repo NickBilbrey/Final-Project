@@ -1,0 +1,33 @@
+<!-- 
+<div class="center">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="">Assignee:</label>
+        <input id="assignee" type="text" formControlName="assignee">
+      </div>
+      <div>
+        <label for="status">Status:</label>
+        <input id="status" type="text" formControlName="status">
+      </div>
+      <div>
+          <label for="resolution">Title:</label>
+          <input id="resolution" type="text" formControlName="resolution">
+        </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div> -->
+  
+  <div class="center">
+    <div class="entry-form">
+      <form [formGroup]="editForm" (ngSubmit)="entry && saveEntry(entry.entryId)">
+        <button type="submit">Save</button>
+        <div class="form-group">
+          <input type="text" id="userEntry" formControlName="userEntry" required [placeholder]="entry?.userEntry">
+        </div>
+        <div class="form-group">
+          <input type="text" id="translation" formControlName="translation" required [placeholder]="entry?.translation">
+        </div>
+      </form>
+    </div>
+  </div>
+  
