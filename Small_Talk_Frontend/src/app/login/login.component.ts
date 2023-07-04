@@ -9,6 +9,16 @@ import { Translation, User } from '../translation';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  showForm = false;
+
+  userList: User[] = [];
+  currentUser: User = {
+    userId:          0,
+    userName:       '',
+    password:       '',
+    dictionaries:   []
+  }  
+
    constructor(private router: Router, private translateService: TranslateService){}
 
    loginUser(userName: string, password: string): void {
@@ -30,4 +40,7 @@ export class LoginComponent {
     });
   }
   
+  onUserCreated(newUser: User): void {
+    this.userList.push(newUser);
+  }
 }

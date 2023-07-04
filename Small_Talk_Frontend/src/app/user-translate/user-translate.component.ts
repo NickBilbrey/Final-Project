@@ -10,11 +10,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./user-translate.component.css']
 })
 export class UserTranslateComponent implements OnInit {
+  entryForm: FormGroup;
+
   translateForm: FormGroup;
   translatedText: string = '';
   
   languages: Language[] = [];
   currentUserDictionary?: Dictionaries;
+  entry?: UserDictionary;
   currentUserEntries: UserDictionary[] = []
   userLanguage?: Language;
   
@@ -22,6 +25,10 @@ export class UserTranslateComponent implements OnInit {
     this.translateForm = this.formBuilder.group({
       selectedLanguage: [''],
       textToTranslate: ['']
+    });
+    this.entryForm = this.formBuilder.group({
+      userEntry: [''],
+      translation: [''],
     });
   }
 
@@ -85,6 +92,27 @@ export class UserTranslateComponent implements OnInit {
     }  
   }
 
+  newEntry() {
+    if (this.entryForm.valid) {
+      const newEntry: UserDictionary = this.entryForm.value;
+      
+      this.translateService.addEntry(newEntry)
+        .subscribe(result => {
+          this.entry = result;
+          console.log(newEntry);
+          
+          newEntry.entryId = result.entryId;
+
+          this.translateService.entry = newEntry;
+
+          this.currentUserEntries.push(newEntry);
+  
+        });
+  
+      this.entryForm.reset();
+    }
+  }
+
   getCurrentDictionary(): void {
     this.currentUserDictionary = this.translateService.userDictionary;
   
@@ -109,8 +137,5 @@ export class UserTranslateComponent implements OnInit {
       console.log('currentUserDictionary is undefined');
     }
   }
-  
-  isInputActive() {
-    return this.translateForm.get('textToTranslate')?.value;
-  }
+ 
 }

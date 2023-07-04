@@ -11,6 +11,7 @@ import { NewDictionaryComponent } from './new-dictionary/new-dictionary.componen
 import { LoginComponent } from './login/login.component';
 import { SortEntriesPipe } from './sort-entries.pipe';
 import { SortDictionariesPipe } from './sort-dictionaries.pipe';
+import { NewUserComponent } from './new-user/new-user.component';
 
 
 
@@ -23,6 +24,7 @@ import { SortDictionariesPipe } from './sort-dictionaries.pipe';
     LoginComponent,
     SortEntriesPipe,
     SortDictionariesPipe,
+    NewUserComponent,
   ],
   imports: [
     BrowserModule,
