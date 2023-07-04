@@ -77,6 +77,5 @@ export class NewDictionaryComponent {
       this.dictionaryForm.reset();
     }
   }
-  
 }
 

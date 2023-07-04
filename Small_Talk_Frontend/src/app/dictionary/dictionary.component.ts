@@ -107,20 +107,11 @@ export class DictionaryComponent implements OnInit {
     this.userDictionaryList.push(newDictionary);
   }
 
-
-  removeDictionary(dictionary: Dictionaries) {
-    if (this.deleteForm.valid) {
-      const index = this.userDictionaryList.findIndex(result => {
-        result.dictionaryId === dictionary.dictionaryId
-        });
-  
-      if (index !== -1) {
-        this.userDictionaryList.splice(index, 1);
-        
-        this.translateService.deleteDictionary(dictionary.dictionaryId).subscribe(() => {
-          console.log('Entry deleted successfully.');
-        });
-      }   
+  removeDictionary(dictionaryId: number) {
+    const index = this.userDictionaryList.findIndex(dictionary => dictionary.dictionaryId === dictionaryId);
+    if (index !== -1) {
+      this.userDictionaryList.splice(index, 1);
+      this.translateService.deleteDictionary(dictionaryId).subscribe();
     }
   }
 }

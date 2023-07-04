@@ -8,25 +8,29 @@
         <thead>
           <tr>
             <th>{{ this.currentUserName }}'s Dictionaries</th>
+            <th>Remove</th>
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let dictionary of userDictionaryList | sortDictionaries">
+          <ng-container *ngFor="let dictionary of userDictionaryList | sortDictionaries; let i = index">
             <tr>
               <td (click)="dictionarySelection(dictionary)">
                 {{ dictionary.dictionaryName }}
               </td>
+              <td>
+                <button (click)="removeDictionary(dictionary.dictionaryId)">Delete</button>
+              </td> 
             </tr>
           </ng-container>
         </tbody>
       </table>
     </div>
-  
+    
     <div class="center">
       <button (click)="showForm = true">Create New</button>
     </div>
   </div>
-  
+
   <div *ngIf="showForm">
     <app-new-dictionary>(dictionaryCreated)="onDictionaryCreated($event)"></app-new-dictionary>
   </div>

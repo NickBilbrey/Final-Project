@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '../translate.service';
 import { Language, TranslationRequest, Translation, Dictionaries, User, UserDictionary, TransliterationRequest, TransliterationResult } from '../translation';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-translate',
@@ -21,7 +21,7 @@ export class UserTranslateComponent implements OnInit {
   currentUserEntries: UserDictionary[] = []
   userLanguage?: Language;
   
-  constructor(private translateService: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute) { 
+  constructor(private translateService: TranslateService, private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute) { 
     this.translateForm = this.formBuilder.group({
       selectedLanguage: ['', Validators.required],
       textToTranslate: ['', Validators.required]
@@ -153,20 +153,25 @@ export class UserTranslateComponent implements OnInit {
     }  
   }
 
-  deleteEntry(entry: UserDictionary) {
-    const index = this.currentUserEntries.findIndex(result => {
-      result.entryId === entry.entryId
-      });
+  routeToEditEntry(editId: number) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        entryId: editId
+      }
+    };
+    console.log(navigationExtras)
+    this.router.navigate(['/edit-entry'], navigationExtras);
+  }
   
+  removeEntry(entryId: number) {
+    const index = this.currentUserEntries.findIndex(entry => entry.entryId === entryId);
     if (index !== -1) {
       this.currentUserEntries.splice(index, 1);
-      
-      this.translateService.deleteEntry(entry.entryId).subscribe(() => {
-        console.log('Entry deleted successfully.');
-      });
+      this.translateService.deleteEntry(entryId).subscribe();
     }
   }
 
+  
   getCurrentDictionary(): void {
     this.currentUserDictionary = this.translateService.userDictionary;
   
