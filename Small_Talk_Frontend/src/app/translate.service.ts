@@ -37,6 +37,10 @@ export class TranslateService {
     return this.http.post<Dictionaries>(this.url + `api/Dictionaries`, dictionary);
   }
 
+  deleteDictionary(dictionaryId: number): Observable<Dictionaries>{
+    return this.http.delete<Dictionaries>(this.url + `api/Dictionaries/${dictionaryId}`);
+  }
+
   getUserDictionary(dictionaryId: number): Observable<UserDictionary[]>{
     return this.http.get<UserDictionary[]>(this.url + `api/UserDictionaries/${dictionaryId}`)
   }
@@ -47,6 +51,10 @@ export class TranslateService {
 
   editEntry(entryId: number): Observable<UserDictionary>{
     return this.http.put<UserDictionary>(this.url + `api/UserDictionaries/${entryId}`, this.entry);
+  }
+
+  deleteEntry(entryId: number): Observable<UserDictionary>{
+    return this.http.delete<UserDictionary>(this.url + `api/UserDictionaries/${entryId}`);
   }
 
   getCurrentLanguages(): Observable<Language[]> {
@@ -62,10 +70,6 @@ export class TranslateService {
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url + 'api/Users')
-  }
-
-  addUser(newUser: User): Observable<User>{
-    return this.http.post<User>(this.url + `api/Users`, newUser);
   }
 
   checkUser(username: string, password: string): Observable<number> {

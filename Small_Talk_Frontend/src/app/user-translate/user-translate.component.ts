@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '../translate.service';
 import { Language, TranslationRequest, Translation, Dictionaries, User, UserDictionary } from '../translation';
-import { FormGroup, FormBuilder } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -23,12 +23,12 @@ export class UserTranslateComponent implements OnInit {
   
   constructor(private translateService: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute) { 
     this.translateForm = this.formBuilder.group({
-      selectedLanguage: [''],
-      textToTranslate: ['']
+      selectedLanguage: ['', Validators.required],
+      textToTranslate: ['', Validators.required]
     });
     this.entryForm = this.formBuilder.group({
-      userEntry: [''],
-      translation: [''],
+      userEntry: ['', Validators.required],
+      translation: ['', Validators.required],
     });
   }
 
@@ -95,21 +95,39 @@ export class UserTranslateComponent implements OnInit {
   newEntry() {
     if (this.entryForm.valid) {
       const newEntry: UserDictionary = this.entryForm.value;
+      if (this.currentUserDictionary){
+        newEntry.dictionaryId = this.currentUserDictionary?.dictionaryId
+        
+        this.translateService.addEntry(newEntry)
+          .subscribe(result => {
+            this.entry = result;
+            console.log(newEntry);
+            
+
+            newEntry.entryId = result.entryId;
+            
+            this.translateService.entry = newEntry;
+            
+            this.currentUserEntries.push(newEntry);
+            
+          });
+    
+        this.entryForm.reset();
+      }
+    }  
+  }
+
+  deleteEntry(entry: UserDictionary) {
+    const index = this.currentUserEntries.findIndex(result => {
+      result.entryId === entry.entryId
+      });
+  
+    if (index !== -1) {
+      this.currentUserEntries.splice(index, 1);
       
-      this.translateService.addEntry(newEntry)
-        .subscribe(result => {
-          this.entry = result;
-          console.log(newEntry);
-          
-          newEntry.entryId = result.entryId;
-
-          this.translateService.entry = newEntry;
-
-          this.currentUserEntries.push(newEntry);
-  
-        });
-  
-      this.entryForm.reset();
+      this.translateService.deleteEntry(entry.entryId).subscribe(() => {
+        console.log('Entry deleted successfully.');
+      });
     }
   }
 

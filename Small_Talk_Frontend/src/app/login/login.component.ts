@@ -9,7 +9,6 @@ import { Translation, User } from '../translation';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  showForm = false;
 
   userList: User[] = [];
   currentUser: User = {
@@ -38,9 +37,5 @@ export class LoginComponent {
         console.log('Error retrieving users:', error);
       }
     });
-  }
-  
-  onUserCreated(newUser: User): void {
-    this.userList.push(newUser);
   }
 }

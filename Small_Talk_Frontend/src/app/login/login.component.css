@@ -1,22 +1,17 @@
 
-.center2 {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
-  }
-  
   .smalltalk-container {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
   
    .smalltalk {
-    font-size: 64px;
+    font-size: 150px;
+    /* color: rgb(46, 46, 132); */
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
     font-weight: 900;
     margin-left: 0.5em;
+    -webkit-text-stroke-width: 7px;
+    -webkit-text-stroke-color: darkblue;
+    -webkit-text-fill-color: #2851f6;
   }
    
   .form-container {

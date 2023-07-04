@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '../translate.service';
 import { Language, TranslationRequest, Translation, Dictionaries, User, UserDictionary } from '../translation';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -11,6 +12,8 @@ import { Router } from '@angular/router';
 })
 export class DictionaryComponent implements OnInit {
   showForm = false;
+
+  deleteForm: FormGroup;
 
 
   languageChoice: string = '';
@@ -56,16 +59,23 @@ export class DictionaryComponent implements OnInit {
   
   currentUserName?: string;
   currentUserId?: number;
+  currentdictionaryId?: number;
   
-  constructor (private translateService: TranslateService, private router: Router){}
+  constructor (private translateService: TranslateService, private formBuilder: FormBuilder, private router: Router){
+    this.deleteForm = this.formBuilder.group({
+      dictionaryName: ['', Validators.required],
+      dictionaryId: this.currentdictionaryId
+    });
+  }
 
   
    async ngOnInit(): Promise<void> {
 
     this.currentUserName = this.translateService.currentUser?.userName;
     const currentUserId = this.translateService.currentUser?.userId;
-    
-    console.log(this.currentUserName, currentUserId);
+    const currentdictionaryId = this.translateService.userDictionary?.dictionaryId;
+
+    console.log(this.currentUserName, currentUserId, currentdictionaryId);
 
     this.translateService.getCurrentLanguages()
     .subscribe(result => {
@@ -95,5 +105,22 @@ export class DictionaryComponent implements OnInit {
   onDictionaryCreated(newDictionary: Dictionaries): void {
     console.log('onDictionaryCreated function called');
     this.userDictionaryList.push(newDictionary);
+  }
+
+
+  removeDictionary(dictionary: Dictionaries) {
+    if (this.deleteForm.valid) {
+      const index = this.userDictionaryList.findIndex(result => {
+        result.dictionaryId === dictionary.dictionaryId
+        });
+  
+      if (index !== -1) {
+        this.userDictionaryList.splice(index, 1);
+        
+        this.translateService.deleteDictionary(dictionary.dictionaryId).subscribe(() => {
+          console.log('Entry deleted successfully.');
+        });
+      }   
+    }
   }
 }
