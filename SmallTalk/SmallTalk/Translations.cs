@@ -32,5 +32,23 @@
             public string TargetLanguageCode { get; set; }
         }
 
+
+        public class TransliterationRequest
+        {
+            public string Text { get; set; }
+            public string Language { get; set; }
+            public string FromScript { get; set; }
+            public string ToScript { get; set; }
+        }
+
+
+        public class TransliterationResult
+        {
+            public string Text { get; set; }
+            public string Script { get; set; }
+        }
+
+
+
     }
 }
