@@ -10,13 +10,14 @@ export class TranslateService {
 
   private url: string = 'https://smalltalk20230626202511.azurewebsites.net/'
 
-  // languages: Language[] = [
-  //   { languageCode:        "ar", name: "Arabic" },
-  //   { languageCode:        "de", name: "German" },
-  //   { languageCode:         "hi", name: "Hindi" },
-  //   { languageCode:      "ja", name: "Japanese" },
-  //   { languageCode: "tlh-Latn", name: "Klingon" }
-  //   ];
+  languages: Language[] = [
+    { languageCode:        "ar", name: "Arabic", fromScript: "Arab" },
+    { languageCode:                            "de", name: "German" },
+    { languageCode:         "hi", name: "Hindi" , fromScript: "Deva"},
+    { languageCode:      "ja", name: "Japanese", fromScript: "Jpan" },
+    { languageCode:                     "tlh-Latn", name: "Klingon" }
+    ];
+
 
     currentUser?: User;
     userDictionary?: Dictionaries;
@@ -36,6 +37,7 @@ export class TranslateService {
   transliterateText(transliterationRequest: TransliterationRequest): Observable<TransliterationResult[]> {
     return this.http.post<TransliterationResult[]>(this.url + 'api/Translation/Transliterate', transliterationRequest);
   }
+
 
   addDictionary(dictionary: Dictionaries): Observable<Dictionaries>{
     return this.http.post<Dictionaries>(this.url + `api/Dictionaries`, dictionary);
@@ -64,12 +66,14 @@ export class TranslateService {
 
   getCurrentLanguages(): Observable<Language[]> {
     const currentLanguages: Language[] = [
+
       { languageCode:                            "en", name: "English"},
       { languageCode:        "ar", name: "Arabic", fromScript: "Arab" },
       { languageCode:                            "de", name: "German" },
       { languageCode:        "hi", name: "Hindi" , fromScript: "Deva" },
       { languageCode:      "ja", name: "Japanese", fromScript: "Jpan" },
       { languageCode:                     "tlh-Latn", name: "Klingon" }
+
     ];
     return of(currentLanguages);
   }

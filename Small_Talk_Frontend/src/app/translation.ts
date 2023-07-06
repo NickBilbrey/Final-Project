@@ -43,6 +43,7 @@ export interface TranslationRequest {
     fromScript: string;
     toScript: string;
   }
+
   export interface TransliterationResult {
     text: string;
     script: string;

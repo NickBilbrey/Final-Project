@@ -118,8 +118,14 @@ export class UserTranslateComponent implements OnInit {
       
     }
   }
-
   
+  transliterateText() {
+    const textToTransliterate: string = this.translatedText;
+=======
+      }
+    }  
+  }
+
   transliterateText() {
     const textToTransliterate: string = this.translatedText;
     if (this.userLanguage) {
@@ -163,6 +169,7 @@ export class UserTranslateComponent implements OnInit {
       }
     }
   }
+  
 
   newEntry() {
     if (this.entryForm.valid) {
