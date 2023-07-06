@@ -14,18 +14,23 @@ export class UserTranslateComponent implements OnInit {
 
   translateForm: FormGroup;
   translatedText: string = '';
+  textToTranslate: string = '';
   
   languages: Language[] = [];
   currentUserDictionary?: Dictionaries;
   entry?: UserDictionary;
-  currentUserEntries: UserDictionary[] = []
+  currentUserEntries: UserDictionary[] = [];
   userLanguage?: Language;
+  defaultLanguage: string = 'en';
   
   constructor(private translateService: TranslateService, private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute) { 
+    this.translatedText = '';
+    
     this.translateForm = this.formBuilder.group({
       selectedLanguage: ['', Validators.required],
-      textToTranslate: ['', Validators.required]
+      textToTranslate: ['', Validators.required],
     });
+
     this.entryForm = this.formBuilder.group({
       userEntry: ['', Validators.required],
       translation: ['', Validators.required],
@@ -61,23 +66,16 @@ export class UserTranslateComponent implements OnInit {
 
   onSubmit() {
     console.log('Form submitted');
-    if(this.userLanguage?.fromScript){
-      this.transliterateText();
-    }
-    else{
-      const textToTranslate: string = this.translateForm.value.textToTranslate;
+    this.textToTranslate = this.translateForm.value.textToTranslate;
       if(this.userLanguage){
         const selectedLanguage: string = this.userLanguage.languageCode
-
-        console.log(textToTranslate);
+        console.log(this.textToTranslate);
         console.log(selectedLanguage);
-      
-        if (textToTranslate && selectedLanguage) {
+        if (this.textToTranslate && selectedLanguage) {
           const translationRequest: TranslationRequest = {
-            textToTranslate: textToTranslate,
+            textToTranslate: this.textToTranslate,
             targetLanguageCode: selectedLanguage
           };
-      
           this.translateService.postTranslate(translationRequest).subscribe({
             next: (response: Translation) => {
               const translationResponse = JSON.parse(response.translation);
@@ -86,37 +84,82 @@ export class UserTranslateComponent implements OnInit {
                 const translatedText = translations[0].text;
                 this.translatedText = translatedText;
                 console.log(translatedText);
-              }
-            },
+                if(this.userLanguage?.fromScript){
+                  this.transliterateText();
+             
+                }
+                else {
+                  const entry: UserDictionary = {
+                    entryId: 0,
+                    userEntry: this.textToTranslate,
+                    translation: this.translatedText,
+                    dictionaryId: this.currentUserDictionary?.dictionaryId ?? 0
+                  };
+                  this.translateService.addEntry(entry).subscribe(result => {
+                    this.entry = result;
+                    console.log(entry);
+      
+                    entry.entryId = result.entryId;
+      
+                    this.translateService.entry = entry;
+      
+                    this.currentUserEntries.push(entry);
+                  });
+                
+                }
+            
+                }
+              },   
             error: (error: any) => {
               console.log('Error Translating:', error);
             }
           });
         }
+      
+    }
+  }
+  
+  transliterateText() {
+    const textToTransliterate: string = this.translatedText;
+=======
       }
     }  
   }
 
   transliterateText() {
-    const textToTransliterate: string = this.translateForm.value.textToTranslate;
+    const textToTransliterate: string = this.translatedText;
     if (this.userLanguage) {
       const languageCode: string = this.userLanguage.languageCode;
       if(this.userLanguage.fromScript){
         const fromScript: string = this.userLanguage.fromScript;
-    
         const transliterationRequest: TransliterationRequest = {
           text: textToTransliterate,
           language: languageCode,
           fromScript: fromScript,
           toScript: 'latn'
         };
-    
         this.translateService.transliterateText(transliterationRequest).subscribe({
           next: (response: TransliterationResult[]) => {
             if (response.length > 0) {
               const transliteratedText = response[0].text;
               this.translatedText = transliteratedText;
-              console.log(transliteratedText);
+              console.log(transliteratedText, this.translatedText);
+              const entry: UserDictionary = {
+                entryId: 0,
+                userEntry: this.textToTranslate,
+                translation: this.translatedText,
+                dictionaryId: this.currentUserDictionary?.dictionaryId ?? 0
+              };
+              this.translateService.addEntry(entry).subscribe(result => {
+                this.entry = result;
+                console.log(entry);
+  
+                entry.entryId = result.entryId;
+  
+                this.translateService.entry = entry;
+  
+                this.currentUserEntries.push(entry);
+              });
             }
           },
           error: (error: any) => {

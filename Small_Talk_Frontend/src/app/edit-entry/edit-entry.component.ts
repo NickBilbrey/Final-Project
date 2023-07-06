@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Dictionaries, Language, UserDictionary } from '../translation';
@@ -14,7 +15,7 @@ export class EditEntryComponent implements OnInit{
 
   languages: Language[] = [];
   currentUserDictionary?: Dictionaries;
-  entry?: UserDictionary;
+  entry: UserDictionary | null = null;
   currentUserEntries: UserDictionary[] = []
   userLanguage?: Language;
   
@@ -28,22 +29,24 @@ export class EditEntryComponent implements OnInit{
   ngOnInit() {
     this.route.params.subscribe(params => {
       const entryId = Number(params['entryId']);
-      this.translateService.editEntry(entryId).subscribe(entry => {
+  
+      this.translateService.editEntry(entryId, this.editForm.value).subscribe(entry => {
         this.entry = entry;
         this.editForm.patchValue({
-          userEntry: entry.userEntry,
-          translation: entry.translation
+          userEntry: entry?.userEntry || '',
+          translation: entry?.translation || ''
         });
       });
     });
   }
+  
 
   saveEntry(entryId: number) {
     if (this.editForm.valid) {
       const editEntry: UserDictionary = this.editForm.value;
   
-      this.translateService.editEntry(entryId).subscribe(result => {
-        console.log(editEntry);
+      this.translateService.editEntry(entryId, editEntry).subscribe(result => {
+        console.log(result);
       });
   
       this.router.navigate(['/user-translate']);

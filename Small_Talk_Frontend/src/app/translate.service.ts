@@ -12,10 +12,10 @@ export class TranslateService {
 
   languages: Language[] = [
     { languageCode:        "ar", name: "Arabic", fromScript: "Arab" },
-    { languageCode:        "de", name: "German" },
+    { languageCode:                            "de", name: "German" },
     { languageCode:         "hi", name: "Hindi" , fromScript: "Deva"},
     { languageCode:      "ja", name: "Japanese", fromScript: "Jpan" },
-    { languageCode: "tlh-Latn", name: "Klingon" }
+    { languageCode:                     "tlh-Latn", name: "Klingon" }
     ];
 
 
@@ -37,7 +37,7 @@ export class TranslateService {
   transliterateText(transliterationRequest: TransliterationRequest): Observable<TransliterationResult[]> {
     return this.http.post<TransliterationResult[]>(this.url + 'api/Translation/Transliterate', transliterationRequest);
   }
-  
+
 
   addDictionary(dictionary: Dictionaries): Observable<Dictionaries>{
     return this.http.post<Dictionaries>(this.url + `api/Dictionaries`, dictionary);
@@ -55,9 +55,10 @@ export class TranslateService {
     return this.http.post<UserDictionary>(this.url + `api/UserDictionaries`, newEntry);
   }
 
-  editEntry(entryId: number): Observable<UserDictionary>{
-    return this.http.put<UserDictionary>(this.url + `api/UserDictionaries/${entryId}`, this.entry);
+  editEntry(entryId: number, updatedEntry: UserDictionary): Observable<UserDictionary> {
+    return this.http.put<UserDictionary>(this.url + `api/UserDictionaries/${entryId}`, updatedEntry);
   }
+  
 
   deleteEntry(entryId: number): Observable<UserDictionary>{
     return this.http.delete<UserDictionary>(this.url + `api/UserDictionaries/${entryId}`);
@@ -65,11 +66,14 @@ export class TranslateService {
 
   getCurrentLanguages(): Observable<Language[]> {
     const currentLanguages: Language[] = [
+
+      { languageCode:                            "en", name: "English"},
       { languageCode:        "ar", name: "Arabic", fromScript: "Arab" },
-      { languageCode:        "de", name: "German" },
-      { languageCode:         "hi", name: "Hindi" , fromScript: "Deva"},
+      { languageCode:                            "de", name: "German" },
+      { languageCode:        "hi", name: "Hindi" , fromScript: "Deva" },
       { languageCode:      "ja", name: "Japanese", fromScript: "Jpan" },
-      { languageCode: "tlh-Latn", name: "Klingon" }
+      { languageCode:                     "tlh-Latn", name: "Klingon" }
+
     ];
     return of(currentLanguages);
   }

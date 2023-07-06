@@ -1,5 +1,14 @@
 
-  
+.log-in {
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  margin-top: 1em;
+  align-items: center;
+  height: 35vh;
+  text-align: center;
+}
+
    .smalltalk {
     font-size: 150px;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
