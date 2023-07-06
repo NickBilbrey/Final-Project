@@ -5,6 +5,7 @@ export interface Translation {
 export interface Language {
     languageCode: string;
     name:         string;
+    fromScript?:  string;
 }
 
 export interface Dictionaries {
@@ -36,4 +37,13 @@ export interface TranslationRequest {
     targetLanguageCode: string;
   }
   
-
+  export interface TransliterationRequest {
+    text: string;
+    language: string;
+    fromScript: string;
+    toScript: string;
+  }
+  export interface TransliterationResult {
+    text: string;
+    script: string;
+  }

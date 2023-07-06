@@ -33,14 +33,14 @@ export class NewDictionaryComponent {
     dictionaries:   []
   }  
 
-  dictionaries: Dictionaries = {
-    dictionaryId:         0,
-    dictionaryName:      '',
-    language: this.language,
-    userId:               0,
-    user:         this.user,
-    userDictionaries:    []
-  }
+   dictionaries?: Dictionaries //= {
+  //   dictionaryId:         0,
+  //   dictionaryName:      '',
+  //   language: this.language,
+  //   userId:               0,
+  //   user:         this.user,
+  //   userDictionaries:    []
+  // }
 
   currentUserId?: number;
 
